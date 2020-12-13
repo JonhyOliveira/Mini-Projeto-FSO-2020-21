@@ -1,0 +1,50 @@
+Superblock:
+valid
+100
+1
+1
+4
+1
+95
+2
+4
+5
+no
+Bmap for i-nodes:
+1 0 1 0 
+Bmap for data blocks:
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+i-nodes:
+0:
+	valid
+	0
+		NULL
+		NULL
+		NULL
+		NULL
+		NULL
+		NULL
+1:
+	invalid
+2:
+	valid
+	0
+		NULL
+		NULL
+		NULL
+		NULL
+		NULL
+		NULL
+3:
+	invalid
+
+Printing contents of file(inode) 0
+** NO DATA **
+
+Printing contents of file(inode) 2
+** NO DATA **

@@ -1,0 +1,30 @@
+Superblock:
+valid
+100
+1
+1
+4
+1
+95
+2
+4
+5
+no
+Bmap for i-nodes:
+0 0 0 0 
+Bmap for data blocks:
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+i-nodes:
+0:
+	invalid
+1:
+	invalid
+2:
+	invalid
+3:
+	invalid

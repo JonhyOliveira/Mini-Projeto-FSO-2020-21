@@ -1,0 +1,196 @@
+Superblock:
+valid
+100
+1
+2
+18
+1
+94
+2
+5
+6
+no
+Bmap for i-nodes:
+1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 
+Bmap for data blocks:
+1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+i-nodes:
+0:
+	valid
+	1497
+		0
+		1
+		2
+		NULL
+		NULL
+		NULL
+1:
+	invalid
+2:
+	invalid
+3:
+	invalid
+4:
+	invalid
+5:
+	invalid
+6:
+	invalid
+7:
+	invalid
+8:
+	invalid
+9:
+	invalid
+10:
+	invalid
+11:
+	invalid
+12:
+	invalid
+13:
+	invalid
+14:
+	invalid
+15:
+	invalid
+16:
+	invalid
+17:
+	invalid
+
+Printing contents of file(inode) 0
+/ * 
+   * 	           A D A P T
+E D   b y   P a u l o   L o p e
+s   f r o m 
+   *             I
+S O   C 9 9   S t a n d a r d :
+  7 . 5   E r r o r s 	 < e r r
+n o . h > 
+   * / 
+ 
+ # i f n d
+e f 	 _ B F S _ E R R N O _ H 
+
+# d e f i n e   _ B F S _ E R R
+N O _ H 	 1 
+ # e n d i f 
+ 
+ #
+d e f i n e   E P E R M        
+                1             /
+*   O p e r a t i o n   n o t  
+p e r m i t t e d   * / 
+ # d e
+f i n e   E N O E N T          
+            2             / *  
+N o   s u c h   f i l e   o r  
+d i r e c t o r y   * / 
+ # d e
+f i n e   E I N T R            
+            4             / *  
+I n t e r r u p t e d   s y s t
+e m   c a l l   * / 
+ # d e f i
+n e   E I O                    
+        5             / *   I /
+O   e r r o r   * / 
+ # d e f i
+n e   E N X I O                
+        6             / *   N o
+  s u c h   d e v i c e   o r  
+a d d r e s s   * / 
+ # d e f i
+n e   E B A D F                
+        9             / *   B a
+d   f i l e   n u m b e r   * /
+
+ # d e f i n e   E A G A I N  
+                  1 1          
+  / *   T r y   a g a i n   * /
+
+ # d e f i n e   E N O M E M  
+                  1 2          
+  / *   O u t   o f   m e m o r
+y   * / 
+ # d e f i n e   E B U
+S Y                       1 6  
+          / *   D e v i c e   o
+r   r e s o u r c e   b u s y  
+* / 
+ # d e f i n e   E E X I S
+T                     1 7      
+      / *   F i l e   e x i s t
+s   * / 
+ # d e f i n e   E N O
+D E V                     1 9  
+          / *   N o   s u c h  
+d e v i c e   * / 
+ # d e f i n
+e   E N O T D I R              
+    2 0             / *   N o t
+  a   d i r e c t o r y   * / 
+
+# d e f i n e   E I S D I R    
+                2 1            
+/ *   I s   a   d i r e c t o r
+y   * / 
+ # d e f i n e   E I N
+V A L                     2 2  
+          / *   I n v a l i d  
+a r g u m e n t   * / 
+ # d e f
+i n e   E N F I L E            
+        2 3             / *   F
+i l e   t a b l e   o v e r f l
+o w   * / 
+ # d e f i n e   E M
+F I L E                     2 4
+            / *   T o o   m a n
+y   o p e n   f i l e s   * / 
+
+# d e f i n e   E F B I G      
+                2 7            
+/ *   F i l e   t o o   l a r g
+e   * / 
+ # d e f i n e   E N O
+S P C                     2 8  
+          / *   N o   s p a c e
+  l e f t   o n   d e v i c e  
+* / 
+ # d e f i n e   E S P I P
+E                     2 9      
+      / *   I l l e g a l   s e
+e k   * / 
+ # d e f i n e   E N
+A M E T O O L O N G         3 6
+            / *   F i l e   n a
+m e   t o o   l o n g   * / 
+ #
+d e f i n e   E N O S Y S      
+              3 8             /
+*   F u n c t i o n   n o t   i
+m p l e m e n t e d   * / 
+ # d
+e f i n e   E W O U L D B L O C
+K           E A G A I N     / *
+  O p e r a t i o n   w o u l d
+  b l o c k   * / 
+ 
+ # d e f i
+n e   E N O M E D I U M        
+      1 2 3           / *   N o
+  m e d i u m   f o u n d   * /
+
+ # d e f i n e   E M E D I U M
+T Y P E           1 2 4        
+  / *   W r o n g   m e d i u m
+  t y p e   * / 
+ 
