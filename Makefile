@@ -1,7 +1,7 @@
-CFLAGS = -Wall
+CFLAGS = -Wall -D DEBUG
 
 dumpBFS: dumpBFS.o disk_driver.o ffs_super.o ffs_bytemap.o ffs_inode.o
-	gcc -o dumpBFS dumpBFS.o disk_driver.o ffs_super.o ffs_bytemap.o ffs_inode.o -lm
+	gcc $(CFLAGS) -o dumpBFS dumpBFS.o disk_driver.o ffs_super.o ffs_bytemap.o ffs_inode.o -lm
 
 dumpBFS.o: dumpBFS.c
 	gcc $(CFLAGS) -c dumpBFS.c

@@ -10,11 +10,14 @@
 static void inode_print(unsigned int number, struct inode *in) {
 
   printf("%d:\n", number);
-  printf("	%s\n", (in->isvalid)?"valid":"invalid");
+  printf("\t%s\n", (in->isvalid)?"valid":"invalid");
   if (in->isvalid) {
-
-    // print the i-node information for one i-node
-
+    printf("\t%d\n", in->size);
+    for (int i = 0; i < POINTERS_PER_INODE; i++)
+      if (i*DISK_BLOCK_SIZE >= in->size)
+        printf("\t\tNULL\n");
+      else
+        printf("\t\t%d\n", in->direct[i]);
   }
 }
 
@@ -22,25 +25,22 @@ static int inode_printTable(unsigned int ninodeblocks, unsigned int ninodes,\
 			unsigned int inodesStartBlock) {
   int ercode;
   union in_block in_b;
-  // more variables...
+  int inblk, in_nmbr;
 
   printf("i-nodes:\n");
 
-  for ( // ninodeblocks is the number of blocks of the inode table) {
+  for (inblk = 0; inblk < ninodeblocks; inblk++) {
 	// the table starts at inodesStartBlock
-    // Get a full inode block; 
-    ...
+    ercode = disk_ops.read(inodesStartBlock + inblk, in_b.data);
     if (ercode < 0) return ercode;
 
     // Print each inode in block
-    for or while....
-      inode_print( number of the inode, inode to print);
-    }
+    for (in_nmbr = 0; in_nmbr < INODES_PER_BLOCK && (inblk*INODES_PER_BLOCK) + in_nmbr < ninodes; in_nmbr++) 
+      inode_print((inblk*INODES_PER_BLOCK)+in_nmbr, &(in_b.ino[in_nmbr]));
   }
   
   return 0;
 }
-
 
 /* inode (global) number is decomposed into inode block number
    and offset within that block. The inode block number starts at 0 */
@@ -58,15 +58,15 @@ static int inode_read(unsigned int startInArea, unsigned int absinode, struct in
   union in_block in_b;
 
   inode_location(absinode, &block, &offset);
-  // read the inode block
+  
+  ercode = disk_ops.read(block, in_b.data); // read the block
+
   if (ercode < 0) return ercode;
   
-  // extract the inode information from the block into inode *in
+  in = &(in_b.ino[offset]); // extract the inode information from the block into inode *in
   
   return 0;
 }
-
-/* For option A prints a buffer of data up to toPrint chars
 
 void f_data_print(unsigned char *buf, int toPrint) {
 int left= toPrint, entry= 0;
@@ -83,27 +83,45 @@ int left= toPrint, entry= 0;
 
 static int inode_printFileData(unsigned int startInArea, unsigned int absinode,\
 			   unsigned int startDtArea) {
-  int ercode, size, toPrint;
+  int ercode, size;
   unsigned int block, offset;
   union in_block in_b;
   unsigned char buf[DISK_BLOCK_SIZE];
+  struct inode in;
 
   inode_location(absinode, &block, &offset);
-  // read the data block containing the inode number absinode
+  
+  // read inode block
+  ercode = disk_ops.read(startInArea + block, in_b.data);
   if (ercode < 0) return ercode;
 
-  if ( the inode referenced at offset is not a valid one) return 0;  
+  // retrive desired inode
+  in = in_b.ino[offset];
+  
+  // check if is valid
+  if (!in.isvalid) return 0;  
 
   printf("\nPrinting contents of file(inode) %d\n", absinode);
 
-  size= get the inode value of the file size
+  size= in.size;
   if (!size) {printf("** NO DATA **\n"); return 0;}
 
-  // print the contents of the data blocks
-  
+  // print inode pointer blocks
+  int in_pointer = 0;
+  int toPrint = in.size;
+  while(in_pointer < ceil((float) in.size/DISK_BLOCK_SIZE) && toPrint > 0) { // number of inode pointers
+    // read block
+    disk_ops.read(startDtArea+in.direct[in_pointer], buf);
+
+    // print block
+    f_data_print(buf, fmin(DISK_BLOCK_SIZE, toPrint));
+
+    in_pointer++;
+    toPrint -= DISK_BLOCK_SIZE;
+  }
   return 0;
 }
- ** end of Option A code */
+
 
 struct inode_operations inode_ops= {
 	.read= inode_read,

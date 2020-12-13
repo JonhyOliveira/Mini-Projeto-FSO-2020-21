@@ -48,9 +48,7 @@ struct inode_operations {
   int (*read)(unsigned int absDskBlk, unsigned int absinode, struct inode *in);
   int (*printTable)(unsigned int ninodeblocks, unsigned int ninodes,\
                         unsigned int absDskBlk);
-/* Optin A:
   int (*printFileData)(unsigned int startInArea, unsigned int absinode,\
                            unsigned int startDtArea);
-*/
 };
 
