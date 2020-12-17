@@ -11,10 +11,14 @@ extern struct disk_operations disk_ops;
 #include "ffs_super.h"
 #endif
 
+#ifndef _BFS_ERRNO_H
+#include "ffs_errno.h"
+#endif
+
 /* #ifndef FFS_INODE_H
 #include "ffs_inode.h"
 #endif */
-// (debug) void super_debug(const struct super *sb);
+void super_debug(const struct super *sb);
 
 static int super_read(struct super *sb) {
   int ercode;
@@ -29,6 +33,31 @@ static int super_read(struct super *sb) {
   return 0;
 }
 
+static int super_check_integrity(struct super *sb) {
+  // TODO: create error codes
+
+  #ifdef DEBUG
+  super_debug(sb);
+  #endif
+
+  // validate magic number
+  if (sb->fsmagic != FS_MAGIC)
+    return -ESBIMAGIC;
+
+  // check if superblock values are valid
+  if (sb->nblocks < 0 || sb->nbmapblocksdata < 0 || sb->nbmapblocksinodes < 0 \
+      || sb->ndatablocks < 0 || sb->ninodeblocks < 0 || sb->ninodes < 0 \
+      || sb->startInArea < BMi_OFFSET || sb->startDtBmap < sb->startInArea \
+      || sb->startDtArea < sb->startDtBmap || sb->nblocks != (sb->startDtBmap + sb->ndatablocks + 1)) // disk starts at 0 (nblocks starts at 1)
+        return -ESBIV;
+
+  // check superblock size
+  int actualSize = disk_ops.stat();
+  if (sb->nblocks != actualSize)
+    return -ESBISIZE;
+
+  return 0;
+}
 
 /* Helper functions */
 
@@ -65,6 +94,7 @@ void super_debug(const struct super *sb) {
 
 struct super_operations super_ops= {
 	.read= &super_read,
+  .checkIntegrity = &super_check_integrity,
 	.print= &super_print,
 	.debug= &super_debug
 };

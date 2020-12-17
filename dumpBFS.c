@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <string.h>
 
 #ifndef DISK_DRIVER_H
 #include "disk_driver.h"

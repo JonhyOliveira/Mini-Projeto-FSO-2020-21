@@ -1,11 +1,19 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
+#include <stdlib.h>
 
 #ifndef FFS_INODE_H
 #include "ffs_inode.h"
 #endif
 
+#ifndef FFS_BYTEMAP_H
+#include "ffs_bytemap.h"
+#endif
+
+#ifndef _BFS_ERRNO_H
+#include "ffs_errno.h"
+#endif
 
 static void inode_print(unsigned int number, struct inode *in) {
 
@@ -30,7 +38,7 @@ static int inode_printTable(unsigned int ninodeblocks, unsigned int ninodes,\
   printf("i-nodes:\n");
 
   for (inblk = 0; inblk < ninodeblocks; inblk++) {
-	// the table starts at inodesStartBlock
+	  // the table starts at inodesStartBlock
     ercode = disk_ops.read(inodesStartBlock + inblk, in_b.data);
     if (ercode < 0) return ercode;
 
@@ -59,12 +67,75 @@ static int inode_read(unsigned int startInArea, unsigned int absinode, struct in
 
   inode_location(absinode, &block, &offset);
   
-  ercode = disk_ops.read(block, in_b.data); // read the block
+  ercode = disk_ops.read(startInArea + block, in_b.data); // read the block
 
   if (ercode < 0) return ercode;
   
-  in = &(in_b.ino[offset]); // extract the inode information from the block into inode *in
+  *in = in_b.ino[offset]; // extract the inode information from the block into inode *in
   
+  return 0;
+}
+
+int inode_check_integrity(struct bytemap *bmap_in, struct bytemap *bmap_dt, struct super *sb) {
+
+  int ercode;
+
+  int nInodes = bmap_in->size;
+
+  struct inode in;
+  int inNB; // number of used data blocks according to inode size
+  int nDB; // data block index
+
+  unsigned char *usedDB  = malloc(bmap_dt->size * sizeof(char)); // bytemap structure
+  // to check if no two inodes share the same data block
+
+  for (int i = 0; i < nInodes; i++) {
+    ercode = inode_read(sb->startInArea, i, &in);
+    if (ercode < 0) return ercode;
+
+    #ifdef DEBUG
+    printf("inode: %d data blocks:", i);
+    #endif
+
+    inNB = ceil((float) in.size / DISK_BLOCK_SIZE);
+    int pointerN;
+    for (pointerN = 0; pointerN < POINTERS_PER_INODE && !(pointerN >= inNB); pointerN++) {
+      
+      nDB = in.direct[pointerN];
+
+      #ifdef DEBUG
+      printf("\t%d", nDB);
+      #endif
+
+      // check if data block is used by other inode
+      if (usedDB[nDB])
+        return -EISB;
+      else
+        usedDB[nDB] = 1;
+
+      // check if inote points to unused data block
+      if (!(bmap_dt->bmap[nDB]))
+        return -EIEB;
+
+      
+
+    }
+
+    #ifdef DEBUG
+    printf("\n");
+    #endif
+
+    /*  Not needed (?)
+    // check if iterated through only the defined pointers
+    if (pointerN != inNB) {
+        #ifdef DEBUG
+        printf("Inode size does not correspond to iterated pointers Inode: %d | Expected n Blocks: %d \
+          | Iterated Blocks: %d", i, inNB, pointerN);
+        #endif
+        return -1;
+    }*/
+  }  
+
   return 0;
 }
 
@@ -111,7 +182,8 @@ static int inode_printFileData(unsigned int startInArea, unsigned int absinode,\
   int toPrint = in.size;
   while(in_pointer < ceil((float) in.size/DISK_BLOCK_SIZE) && toPrint > 0) { // number of inode pointers
     // read block
-    disk_ops.read(startDtArea+in.direct[in_pointer], buf);
+    ercode = disk_ops.read(startDtArea+in.direct[in_pointer], buf);
+    if (ercode < 0) return ercode;
 
     // print block
     f_data_print(buf, fmin(DISK_BLOCK_SIZE, toPrint));
@@ -125,6 +197,7 @@ static int inode_printFileData(unsigned int startInArea, unsigned int absinode,\
 
 struct inode_operations inode_ops= {
 	.read= inode_read,
+  .checkIntegrity= inode_check_integrity,
 	.printFileData= inode_printFileData,
 	.printTable= inode_printTable
 };

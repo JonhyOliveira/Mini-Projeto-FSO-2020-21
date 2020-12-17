@@ -9,7 +9,7 @@
 #define SB_OFFSET	0
 #define BMi_OFFSET	1
 
-#define FS_MAGIC	0xf0f03410
+#define FS_MAGIC	0xf0f03410 // 4042273808
 
 struct super {
   unsigned int fsmagic;
@@ -37,6 +37,20 @@ union sb_block {
     parameters:
      @out: pointer to superblock structure
 
+    errors:
+     resulting from disk read
+
+  check: checks the integrity of a superblock
+    parameters:
+     @in: pointer to a superblock structure
+     @out: pointer to valid superblock structure, if no errors were reported
+    
+    errors:
+     -1: invalid magic number
+     -1: superblock size does not respond to actual disk size
+
+
+
   print: prints a superblock with minimum information
     parameters:
      @in: pointer to superblock structure
@@ -50,6 +64,7 @@ union sb_block {
 
 struct super_operations {
   int (*read)(struct super *sb);
+  int (*checkIntegrity)(struct super *sb);
   void (*print)(const struct super *sb);
   void (*debug)(const struct super *sb);
 };

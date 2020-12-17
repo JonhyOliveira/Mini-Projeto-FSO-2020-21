@@ -7,6 +7,8 @@
 #define _BFS_ERRNO_H	1
 #endif
 
+/* DISK DRIVER */
+
 #define EPERM            1      /* Operation not permitted */
 #define ENOENT           2      /* No such file or directory */
 #define EINTR            4      /* Interrupted system call */
@@ -32,3 +34,20 @@
 
 #define ENOMEDIUM       123     /* No medium found */
 #define EMEDIUMTYPE     124     /* Wrong medium type */
+
+/* SUPER BLOCK */
+
+#define ESBIMAGIC   201     /* Invalid Magic Number */
+#define ESBIV    202     /* Invalid Values */
+#define ESBISIZE    203  
+
+/* INODE */
+
+#define EISB 301 /* Different inodes share same block */
+#define EIEB 302 /* Inode points to empty data block */
+
+/* BYTE MAP */
+
+#define EBMUV 401 /* Unexpected value (should be 0 or 1) */
+#define EBMWV 402 /* Wrong value (contradiction between actual value and value in bytemap) */
+

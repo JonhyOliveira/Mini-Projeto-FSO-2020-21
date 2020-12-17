@@ -1,0 +1,13 @@
+1- superblock:
+    - magic é válido
+    - nblocks * DISK_BLOCK_SIZE corresponde ao disk_ops.stat() que é o tamanho real do disco
+    - ordem dos blocos está correta
+
+2- bytemap:
+    - valor invalido (não é 0 ou 1)
+    - valor nao corresponde ao real
+
+3- inode:
+    - inode aponta para bloco nao utilizado
+    - inodes partilham blocos de disco
+    - size corresponde ao numero de blocos definidos (que nao sao 0)
