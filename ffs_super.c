@@ -48,7 +48,7 @@ static int super_check_integrity(struct super *sb) {
   if (sb->nblocks < 0 || sb->nbmapblocksdata < 0 || sb->nbmapblocksinodes < 0 \
       || sb->ndatablocks < 0 || sb->ninodeblocks < 0 || sb->ninodes < 0 \
       || sb->startInArea < BMi_OFFSET || sb->startDtBmap < sb->startInArea \
-      || sb->startDtArea < sb->startDtBmap || sb->nblocks != (sb->startDtBmap + sb->ndatablocks + 1)) // disk starts at 0 (nblocks starts at 1)
+      || sb->startDtArea < sb->startDtBmap || sb->nblocks < (sb->startDtBmap + sb->ndatablocks + 1)) // disk starts at 0 (nblocks starts at 1)
         return -ESBIV;
 
   // check superblock size

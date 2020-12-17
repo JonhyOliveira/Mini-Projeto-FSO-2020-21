@@ -35,13 +35,11 @@ int main( int argc, char *argv[]) {
 
     ercode = disk_ops.open(argv[1], 0); 
     if (ercode < 0) {
-        #ifdef DEBUG
-        printf("\nError opening disk: %d", ercode);
-        #endif
+        printf("Error opening disk: %d\n", ercode);
         return ercode;
     }
     
-    printf("Beggining Disk %s Check..\n", argv[1]);
+    printf("Beggining Disk Check of disk %s\n", argv[1]);
 
     struct super sb;
     ercode = super_ops.read(&sb);

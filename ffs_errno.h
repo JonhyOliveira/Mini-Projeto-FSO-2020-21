@@ -37,17 +37,17 @@
 
 /* SUPER BLOCK */
 
-#define ESBIMAGIC   201     /* Invalid Magic Number */
-#define ESBIV    202     /* Invalid Values */
-#define ESBISIZE    203  
+#define ESBIMAGIC       201     /* Invalid Magic Number */
+#define ESBIV           202     /* Invalid Values */
+#define ESBISIZE        203     /* Invalid Size */
 
 /* INODE */
 
-#define EISB 301 /* Different inodes share same block */
-#define EIEB 302 /* Inode points to empty data block */
+#define EISB            301     /* Different inodes share same block */
+#define EIEB            302     /* Inode points to empty data block */
 
 /* BYTE MAP */
 
-#define EBMUV 401 /* Unexpected value (should be 0 or 1) */
-#define EBMWV 402 /* Wrong value (contradiction between actual value and value in bytemap) */
+#define EBMUV           401     /* Unexpected value (should be 0 or 1) */
+#define EBMWV           402     /* Wrong value (contradiction between actual value and value in bytemap) */
 
