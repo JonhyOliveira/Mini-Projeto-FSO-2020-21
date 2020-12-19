@@ -78,3 +78,7 @@ struct bytemap_operations {
   void (*printTable)(struct bytemap *bmap);
 };
 
+/* BYTE MAP INTEGRITY ERRORS */
+
+#define EBMUV           401     /* Unexpected value (should be 0 or 1) */
+#define EBMWV           402     /* Wrong value (contradiction between actual value and value in bytemap) */
