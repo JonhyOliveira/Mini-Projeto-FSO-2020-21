@@ -35,13 +35,3 @@
 #define ENOMEDIUM       123     /* No medium found */
 #define EMEDIUMTYPE     124     /* Wrong medium type */
 
-/* INODE */
-
-#define EISB            301     /* Different inodes share same block */
-#define EIEB            302     /* Inode points to empty data block */
-
-/* BYTE MAP */
-
-#define EBMUV           401     /* Unexpected value (should be 0 or 1) */
-#define EBMWV           402     /* Wrong value (contradiction between actual value and value in bytemap) */
-
