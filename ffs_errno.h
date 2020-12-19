@@ -35,12 +35,6 @@
 #define ENOMEDIUM       123     /* No medium found */
 #define EMEDIUMTYPE     124     /* Wrong medium type */
 
-/* SUPER BLOCK */
-
-#define ESBIMAGIC       201     /* Invalid Magic Number */
-#define ESBIV           202     /* Invalid Values */
-#define ESBISIZE        203     /* Invalid Size */
-
 /* INODE */
 
 #define EISB            301     /* Different inodes share same block */
