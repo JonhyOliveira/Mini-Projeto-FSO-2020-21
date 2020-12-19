@@ -68,3 +68,10 @@ struct super_operations {
   void (*print)(const struct super *sb);
   void (*debug)(const struct super *sb);
 };
+
+
+/* SUPER BLOCK INTEGRITY ERRORS */
+
+#define ESBIMAGIC       201     /* Invalid Magic Number */
+#define ESBIV           202     /* Invalid Values */
+#define ESBISIZE        203     /* Invalid Size */
