@@ -65,3 +65,7 @@ struct inode_operations {
                            unsigned int startDtArea);
 };
 
+/* INODE INTEGRITY ERRORS */
+
+#define EISB            301     /* Different inodes share same block */
+#define EIEB            302     /* Inode points to empty data block */
